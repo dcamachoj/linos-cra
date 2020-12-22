@@ -1,0 +1,48 @@
+project: true
+data:
+  initial: Button0
+  page: Hello
+files:
+  - package.json
+  - src/cmps/button.js
+actions:
+  - type: delete
+    args:
+      - .git
+  - type: rename
+    args:
+      - src/cmps
+      - src/components
+  - type: copy
+    args:
+      - src/components/button.js
+      - src/pages/{{ .page }}.jsx
+  - type: rename
+    args:
+      - src/components/button.js
+      - src/components/{{ .initial }}.jsx
+  - type: insert-after
+    args:
+      - src/App.js
+      - 'import "\.\/App.css";'
+      - 'import { {{ .initial }} } from "./components/{{ .initial }}";'
+  - type: insert-before
+    args:
+      - src/App.js
+      - 'import logo from \"\.\/logo\.svg";'
+      - "// {{ .initial }} Component"
+  - type: insert-before
+    args:
+      - src/App.js
+      - '\<\/header\>'
+      - "        <{{ .initial }}/>"
+  - type: replace-all
+    args:
+      - src/App.js
+      - '\<p\>'
+      - '<p className="hello">'
+  - type: replace-all
+    args:
+      - src/App.js
+      - '(reactjs\.org)'
+      - "$1/hello"
